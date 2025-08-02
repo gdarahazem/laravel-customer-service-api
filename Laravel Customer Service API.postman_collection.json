@@ -1,0 +1,1712 @@
+{
+	"info": {
+		"_postman_id": "fcbeef2a-a2c9-46a2-84cf-78eed379080a",
+		"name": "Laravel Customer Service API",
+		"description": "Complete API collection for Customer Service Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18186021",
+		"_collection_link": "https://hazem-team.postman.co/workspace/Own~3fd13080-1771-4cf2-8adb-2605cd14f719/collection/18186021-fcbeef2a-a2c9-46a2-84cf-78eed379080a?action=share&source=collection_link&creator=18186021"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"hazem1\",\n    \"email\": \"hazem1@gmail.com\",\n    \"password\": \"password\",\n    \"password_confirmation\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Done",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"hazem1\",\n    \"email\": \"hazem1@gmail.com\",\n    \"password\": \"password\",\n    \"password_confirmation\": \"password\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.18"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 18:28:43 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"User registered successfully\",\n    \"data\": {\n        \"user\": {\n            \"id\": 2,\n            \"name\": \"hazem1\",\n            \"email\": \"hazem1@gmail.com\",\n            \"email_verified_at\": null,\n            \"created_at\": \"2025-08-02T18:28:42.000000Z\",\n            \"updated_at\": \"2025-08-02T18:28:42.000000Z\"\n        },\n        \"token\": \"4|heViTO3EudRnzaZRDUerDloQYqbOebN3modnonJZ01c1c9e7\"\n    }\n}"
+						},
+						{
+							"name": "Email already exist",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"hazem1\",\n    \"email\": \"hazem1@gmail.com\",\n    \"password\": \"password\",\n    \"password_confirmation\": \"password\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.18"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 18:29:34 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Email already exists\",\n    \"errors\": {\n        \"email\": [\n            \"Email already exists\"\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.data.token) {",
+									"        pm.environment.set('auth_token', response.data.token);",
+									"        console.log('Token saved:', response.data.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"hazem1@gmail.com\",\n    \"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Done",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"hazem1@gmail.com\",\n    \"password\": \"password\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.18"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 18:30:12 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"user\": {\n            \"id\": 2,\n            \"name\": \"hazem1\",\n            \"email\": \"hazem1@gmail.com\",\n            \"email_verified_at\": null,\n            \"created_at\": \"2025-08-02T18:28:42.000000Z\",\n            \"updated_at\": \"2025-08-02T18:28:42.000000Z\"\n        },\n        \"token\": \"5|p0bhCDzfzcagoa9uxXBaPufpgqXZh1GG8LuLRUtU3b99b107\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Logout User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/auth/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Get All Customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/customers?page=1&per_page=15",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Done",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/customers?page=1&per_page=15",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customers"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "15"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.18"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 18:34:26 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Customers retrieved successfully\",\n    \"data\": {\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": 26,\n                \"first_name\": \"hazzzim\",\n                \"last_name\": \"Gdaraa\",\n                \"email\": \"hazim.gdara@example.com\",\n                \"phone\": \"+21655851451\",\n                \"company\": \"HAZEM\",\n                \"address\": \"123 RUE DE POMME\",\n                \"city\": \"tUNIS\",\n                \"state\": \"TT\",\n                \"postal_code\": \"10001\",\n                \"country\": \"tn\",\n                \"status\": \"active\",\n                \"created_at\": \"2025-08-02T18:33:57.000000Z\",\n                \"updated_at\": \"2025-08-02T18:33:57.000000Z\"\n            },\n            {\n                \"id\": 6,\n                \"first_name\": \"Solon\",\n                \"last_name\": \"Osinski\",\n                \"email\": \"garnet57@example.net\",\n                \"phone\": \"678.415.2948\",\n                \"company\": \"Lowe, Brown and Braun\",\n                \"address\": \"3417 Michel Stravenue Apt. 595\",\n                \"city\": \"McKenziebury\",\n                \"state\": \"South Carolina\",\n                \"postal_code\": \"68380-2014\",\n                \"country\": \"Russian Federation\",\n                \"status\": \"active\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n            },\n            {\n                \"id\": 7,\n                \"first_name\": \"Ebba\",\n                \"last_name\": \"Bruen\",\n                \"email\": \"lindsey.schowalter@example.com\",\n                \"phone\": \"864.264.1188\",\n                \"company\": \"Schuppe, Windler and Harber\",\n                \"address\": \"8341 Kerluke Roads Apt. 337\",\n                \"city\": \"East Margaretta\",\n                \"state\": \"Pennsylvania\",\n                \"postal_code\": \"94469\",\n                \"country\": \"Estonia\",\n                \"status\": \"inactive\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n            },\n            {\n                \"id\": 8,\n                \"first_name\": \"Lucious\",\n                \"last_name\": \"Roob\",\n                \"email\": \"von.savanah@example.net\",\n                \"phone\": \"+1-463-799-7105\",\n                \"company\": \"Kilback, Mitchell and Wisozk\",\n                \"address\": \"4049 Russel Garden\",\n                \"city\": \"South Dennis\",\n                \"state\": \"Nebraska\",\n                \"postal_code\": \"87806-9649\",\n                \"country\": \"Equatorial Guinea\",\n                \"status\": \"active\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n            },\n            {\n                \"id\": 9,\n                \"first_name\": \"Kaley\",\n                \"last_name\": \"Luettgen\",\n                \"email\": \"jenkins.everett@example.com\",\n                \"phone\": \"+1 (402) 674-9228\",\n                \"company\": \"Gusikowski-Jacobs\",\n                \"address\": \"9703 Zula Dam Apt. 072\",\n                \"city\": \"Dorotheaville\",\n                \"state\": \"Arizona\",\n                \"postal_code\": \"03398-3544\",\n                \"country\": \"Togo\",\n                \"status\": \"inactive\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n            },\n            {\n                \"id\": 10,\n                \"first_name\": \"Marvin\",\n                \"last_name\": \"Thiel\",\n                \"email\": \"ffarrell@example.com\",\n                \"phone\": \"+1-718-829-8405\",\n                \"company\": \"Fahey-Kovacek\",\n                \"address\": \"2020 Ashlynn Flats\",\n                \"city\": \"Runolfsdottirstad\",\n                \"state\": \"Mississippi\",\n                \"postal_code\": \"38960\",\n                \"country\": \"Moldova\",\n                \"status\": \"inactive\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n            },\n            {\n                \"id\": 11,\n                \"first_name\": \"Branson\",\n                \"last_name\": \"Kunde\",\n                \"email\": \"iwatsica@example.com\",\n                \"phone\": \"+1-857-399-0489\",\n                \"company\": \"Farrell-Reinger\",\n                \"address\": \"990 Schmitt Via Suite 193\",\n                \"city\": \"Andyburgh\",\n                \"state\": \"Wyoming\",\n                \"postal_code\": \"36148\",\n                \"country\": \"El Salvador\",\n                \"status\": \"inactive\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n            },\n            {\n                \"id\": 12,\n                \"first_name\": \"Nayeli\",\n                \"last_name\": \"Harvey\",\n                \"email\": \"heaven81@example.net\",\n                \"phone\": \"+1-603-590-7861\",\n                \"company\": \"Fadel, Bruen and Pfeffer\",\n                \"address\": \"754 Carlotta View\",\n                \"city\": \"South Mauriciofurt\",\n                \"state\": \"Nebraska\",\n                \"postal_code\": \"76840-3002\",\n                \"country\": \"Saint Kitts and Nevis\",\n                \"status\": \"inactive\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n            },\n            {\n                \"id\": 13,\n                \"first_name\": \"Kaitlin\",\n                \"last_name\": \"Lockman\",\n                \"email\": \"beverly17@example.net\",\n                \"phone\": \"820.623.9559\",\n                \"company\": \"Bechtelar, Davis and Abernathy\",\n                \"address\": \"588 Camylle Burg\",\n                \"city\": \"Port Jackeline\",\n                \"state\": \"New York\",\n                \"postal_code\": \"27562\",\n                \"country\": \"Estonia\",\n                \"status\": \"active\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n            },\n            {\n                \"id\": 14,\n                \"first_name\": \"Madison\",\n                \"last_name\": \"Torphy\",\n                \"email\": \"zstanton@example.net\",\n                \"phone\": \"(631) 920-4240\",\n                \"company\": \"Balistreri, Wuckert and Murray\",\n                \"address\": \"640 Oberbrunner Stravenue\",\n                \"city\": \"Hoegermouth\",\n                \"state\": \"Kentucky\",\n                \"postal_code\": \"53843-4715\",\n                \"country\": \"Tokelau\",\n                \"status\": \"active\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n            },\n            {\n                \"id\": 15,\n                \"first_name\": \"David\",\n                \"last_name\": \"Glover\",\n                \"email\": \"twatsica@example.com\",\n                \"phone\": \"1-678-270-2349\",\n                \"company\": \"Runolfsson-Borer\",\n                \"address\": \"2824 Labadie Corner\",\n                \"city\": \"Roslynburgh\",\n                \"state\": \"Delaware\",\n                \"postal_code\": \"75737\",\n                \"country\": \"Romania\",\n                \"status\": \"active\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n            },\n            {\n                \"id\": 16,\n                \"first_name\": \"Kaley\",\n                \"last_name\": \"Legros\",\n                \"email\": \"darrell93@example.org\",\n                \"phone\": \"1-260-517-2286\",\n                \"company\": \"Graham Inc\",\n                \"address\": \"86117 Metz Ramp\",\n                \"city\": \"Henryberg\",\n                \"state\": \"New Mexico\",\n                \"postal_code\": \"09895\",\n                \"country\": \"Bouvet Island (Bouvetoya)\",\n                \"status\": \"inactive\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n            },\n            {\n                \"id\": 17,\n                \"first_name\": \"Aurelie\",\n                \"last_name\": \"Fahey\",\n                \"email\": \"tate11@example.com\",\n                \"phone\": \"774.264.9140\",\n                \"company\": \"Labadie-Stamm\",\n                \"address\": \"86526 Lewis Spurs\",\n                \"city\": \"Lafayetteshire\",\n                \"state\": \"Oklahoma\",\n                \"postal_code\": \"85712-9232\",\n                \"country\": \"Portugal\",\n                \"status\": \"inactive\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n            },\n            {\n                \"id\": 18,\n                \"first_name\": \"Rosemarie\",\n                \"last_name\": \"Kuhlman\",\n                \"email\": \"jensen04@example.org\",\n                \"phone\": \"207-996-4218\",\n                \"company\": \"Dibbert, Hauck and Reichel\",\n                \"address\": \"972 Smitham Summit\",\n                \"city\": \"Aiyanaside\",\n                \"state\": \"Massachusetts\",\n                \"postal_code\": \"20122-7587\",\n                \"country\": \"Saint Martin\",\n                \"status\": \"active\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n            },\n            {\n                \"id\": 19,\n                \"first_name\": \"Eriberto\",\n                \"last_name\": \"Kuvalis\",\n                \"email\": \"kozey.eveline@example.com\",\n                \"phone\": \"+1.847.378.4521\",\n                \"company\": \"Nader, Franecki and Raynor\",\n                \"address\": \"36101 Rippin Points Apt. 451\",\n                \"city\": \"East Ryleefort\",\n                \"state\": \"New Mexico\",\n                \"postal_code\": \"61676-0595\",\n                \"country\": \"South Africa\",\n                \"status\": \"active\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n            }\n        ],\n        \"first_page_url\": \"http://localhost:8000/api/customers?page=1\",\n        \"from\": 1,\n        \"last_page\": 2,\n        \"last_page_url\": \"http://localhost:8000/api/customers?page=2\",\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8000/api/customers?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": \"http://localhost:8000/api/customers?page=2\",\n                \"label\": \"2\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8000/api/customers?page=2\",\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"next_page_url\": \"http://localhost:8000/api/customers?page=2\",\n        \"path\": \"http://localhost:8000/api/customers\",\n        \"per_page\": 15,\n        \"prev_page_url\": null,\n        \"to\": 15,\n        \"total\": 26\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Search Customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/customers?search=hazz&per_page=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "hazz"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Done",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/customers?search=hazz&per_page=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customers"
+									],
+									"query": [
+										{
+											"key": "search",
+											"value": "hazz"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.18"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 18:34:59 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Customers retrieved successfully\",\n    \"data\": {\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": 26,\n                \"first_name\": \"hazzzim\",\n                \"last_name\": \"Gdaraa\",\n                \"email\": \"hazim.gdara@example.com\",\n                \"phone\": \"+21655851451\",\n                \"company\": \"HAZEM\",\n                \"address\": \"123 RUE DE POMME\",\n                \"city\": \"tUNIS\",\n                \"state\": \"TT\",\n                \"postal_code\": \"10001\",\n                \"country\": \"tn\",\n                \"status\": \"active\",\n                \"created_at\": \"2025-08-02T18:33:57.000000Z\",\n                \"updated_at\": \"2025-08-02T18:33:57.000000Z\"\n            }\n        ],\n        \"first_page_url\": \"http://localhost:8000/api/customers?page=1\",\n        \"from\": 1,\n        \"last_page\": 1,\n        \"last_page_url\": \"http://localhost:8000/api/customers?page=1\",\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8000/api/customers?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"next_page_url\": null,\n        \"path\": \"http://localhost:8000/api/customers\",\n        \"per_page\": 10,\n        \"prev_page_url\": null,\n        \"to\": 1,\n        \"total\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.data.id) {",
+									"        pm.environment.set('customer_id', response.data.id);",
+									"        console.log('Customer ID saved:', response.data.id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"hazzzim\",\n    \"last_name\": \"Gdaraa\",\n    \"email\": \"hazim.gdara@example.com\",\n    \"phone\": \"+21655851451\",\n    \"company\": \"HAZEM\",\n    \"address\": \"123 RUE DE POMME\",\n    \"city\": \"tUNIS\",\n    \"state\": \"TT\",\n    \"postal_code\": \"10001\",\n    \"country\": \"tn\",\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/customers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Done",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\": \"hazzzim\",\n    \"last_name\": \"Gdaraa\",\n    \"email\": \"hazim.gdara@example.com\",\n    \"phone\": \"+21655851451\",\n    \"company\": \"HAZEM\",\n    \"address\": \"123 RUE DE POMME\",\n    \"city\": \"tUNIS\",\n    \"state\": \"TT\",\n    \"postal_code\": \"10001\",\n    \"country\": \"tn\",\n    \"status\": \"active\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/customers",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.18"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 18:33:57 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Customer created successfully\",\n    \"data\": {\n        \"first_name\": \"hazzzim\",\n        \"last_name\": \"Gdaraa\",\n        \"email\": \"hazim.gdara@example.com\",\n        \"phone\": \"+21655851451\",\n        \"company\": \"HAZEM\",\n        \"address\": \"123 RUE DE POMME\",\n        \"city\": \"tUNIS\",\n        \"state\": \"TT\",\n        \"postal_code\": \"10001\",\n        \"country\": \"tn\",\n        \"status\": \"active\",\n        \"updated_at\": \"2025-08-02T18:33:57.000000Z\",\n        \"created_at\": \"2025-08-02T18:33:57.000000Z\",\n        \"id\": 26\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Customer by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/customers/{{customer_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"{{customer_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Done",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/customers/{{customer_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customers",
+										"{{customer_id}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.18"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 18:35:43 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Customer retrieved successfully\",\n    \"data\": {\n        \"id\": 26,\n        \"first_name\": \"hazzzim\",\n        \"last_name\": \"Gdaraa\",\n        \"email\": \"hazim.gdara@example.com\",\n        \"phone\": \"+21655851451\",\n        \"company\": \"HAZEM\",\n        \"address\": \"123 RUE DE POMME\",\n        \"city\": \"tUNIS\",\n        \"state\": \"TT\",\n        \"postal_code\": \"10001\",\n        \"country\": \"tn\",\n        \"status\": \"active\",\n        \"created_at\": \"2025-08-02T18:33:57.000000Z\",\n        \"updated_at\": \"2025-08-02T18:33:57.000000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Customer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"hazzzim\",\n    \"last_name\": \"Gdaraa\",\n    \"email\": \"hazim.gdara@gmail.com\",\n    \"company\": \"Updated Acme Corporation\",\n    \"phone\": \"+1987654321\",\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/{{customer_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"{{customer_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Done",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\": \"hazzzim\",\n    \"last_name\": \"Gdaraa\",\n    \"email\": \"hazim.gdara@gmail.com\",\n    \"company\": \"Updated Acme Corporation\",\n    \"phone\": \"+1987654321\",\n    \"status\": \"active\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/customers/{{customer_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customers",
+										"{{customer_id}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.18"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 18:36:45 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Customer updated successfully\",\n    \"data\": {\n        \"id\": 26,\n        \"first_name\": \"hazzzim\",\n        \"last_name\": \"Gdaraa\",\n        \"email\": \"hazim.gdara@gmail.com\",\n        \"phone\": \"+1987654321\",\n        \"company\": \"Updated Acme Corporation\",\n        \"address\": \"123 RUE DE POMME\",\n        \"city\": \"tUNIS\",\n        \"state\": \"TT\",\n        \"postal_code\": \"10001\",\n        \"country\": \"tn\",\n        \"status\": \"active\",\n        \"created_at\": \"2025-08-02T18:33:57.000000Z\",\n        \"updated_at\": \"2025-08-02T18:36:45.000000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Customer",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/customers/{{customer_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"{{customer_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Services",
+			"item": [
+				{
+					"name": "Get All Services",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/services?page=1&per_page=15",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"services"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Done",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/services?page=1&per_page=15",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"services"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "15"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.18"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 18:38:08 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Services retrieved successfully\",\n    \"data\": {\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": 2,\n                \"customer_id\": 2,\n                \"name\": \"Web Development\",\n                \"description\": \"Aut et libero et delectus error maxime sunt. Quia reprehenderit nihil velit ipsum rem earum iusto. Et et nihil dolor.\",\n                \"type\": \"training\",\n                \"price\": \"9044.05\",\n                \"status\": \"active\",\n                \"start_date\": \"2025-05-25T00:00:00.000000Z\",\n                \"end_date\": \"2025-08-23T00:00:00.000000Z\",\n                \"duration_hours\": 360,\n                \"features\": [\n                    \"User Authentication\",\n                    \"Analytics Integration\",\n                    \"Real-time Updates\",\n                    \"Third-party APIs\"\n                ],\n                \"notes\": null,\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 2,\n                    \"first_name\": \"Jasen\",\n                    \"last_name\": \"Fadel\",\n                    \"email\": \"cristina.kerluke@example.net\",\n                    \"phone\": \"689-606-2149\",\n                    \"company\": \"Emard Group\",\n                    \"address\": \"15452 Vesta Forest Suite 339\",\n                    \"city\": \"Ornburgh\",\n                    \"state\": \"North Carolina\",\n                    \"postal_code\": \"73594-8271\",\n                    \"country\": \"Sao Tome and Principe\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T15:38:30.000000Z\",\n                    \"updated_at\": \"2025-08-02T15:38:30.000000Z\"\n                }\n            },\n            {\n                \"id\": 3,\n                \"customer_id\": 2,\n                \"name\": \"Technical Consultation\",\n                \"description\": \"Sapiente tenetur officiis officia laboriosam accusantium. Doloribus voluptates ut dignissimos eveniet magnam consequatur doloremque. Suscipit voluptate accusantium fuga temporibus laudantium qui. Fugit rerum officiis beatae vitae et nostrum.\",\n                \"type\": \"consultation\",\n                \"price\": \"2653.24\",\n                \"status\": \"completed\",\n                \"start_date\": \"2025-05-18T00:00:00.000000Z\",\n                \"end_date\": \"2025-11-12T00:00:00.000000Z\",\n                \"duration_hours\": 408,\n                \"features\": [\n                    \"Third-party APIs\",\n                    \"Security Features\",\n                    \"Mobile Optimization\"\n                ],\n                \"notes\": \"Asperiores modi cupiditate perspiciatis ea sit perspiciatis esse.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 2,\n                    \"first_name\": \"Jasen\",\n                    \"last_name\": \"Fadel\",\n                    \"email\": \"cristina.kerluke@example.net\",\n                    \"phone\": \"689-606-2149\",\n                    \"company\": \"Emard Group\",\n                    \"address\": \"15452 Vesta Forest Suite 339\",\n                    \"city\": \"Ornburgh\",\n                    \"state\": \"North Carolina\",\n                    \"postal_code\": \"73594-8271\",\n                    \"country\": \"Sao Tome and Principe\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T15:38:30.000000Z\",\n                    \"updated_at\": \"2025-08-02T15:38:30.000000Z\"\n                }\n            },\n            {\n                \"id\": 4,\n                \"customer_id\": 3,\n                \"name\": \"Security Audit\",\n                \"description\": \"Dolor ut adipisci aut eveniet eum. Dolores doloribus nihil non et adipisci. Saepe in deleniti debitis laboriosam nam reprehenderit minima ipsum. Consectetur vel sit assumenda expedita optio et suscipit doloribus.\",\n                \"type\": \"other\",\n                \"price\": \"9604.42\",\n                \"status\": \"active\",\n                \"start_date\": \"2025-03-14T00:00:00.000000Z\",\n                \"end_date\": \"2026-01-18T00:00:00.000000Z\",\n                \"duration_hours\": 408,\n                \"features\": [\n                    \"Third-party APIs\",\n                    \"Analytics Integration\",\n                    \"SEO Optimization\",\n                    \"Admin Panel\"\n                ],\n                \"notes\": \"Minima iste iure est aspernatur.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 3,\n                    \"first_name\": \"Ara\",\n                    \"last_name\": \"Zieme\",\n                    \"email\": \"kertzmann.lloyd@example.org\",\n                    \"phone\": \"786.528.0319\",\n                    \"company\": \"Gerhold Group\",\n                    \"address\": \"4526 Bosco Club Suite 319\",\n                    \"city\": \"Vivianefort\",\n                    \"state\": \"Massachusetts\",\n                    \"postal_code\": \"41793\",\n                    \"country\": \"Albania\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T15:38:30.000000Z\",\n                    \"updated_at\": \"2025-08-02T15:38:30.000000Z\"\n                }\n            },\n            {\n                \"id\": 5,\n                \"customer_id\": 4,\n                \"name\": \"Maintenance Package\",\n                \"description\": \"Et maiores iusto soluta praesentium est. Ut voluptatibus laboriosam esse quis. Sint cum dolorem numquam sint tenetur.\",\n                \"type\": \"development\",\n                \"price\": \"1198.48\",\n                \"status\": \"completed\",\n                \"start_date\": \"2025-08-23T00:00:00.000000Z\",\n                \"end_date\": \"2025-12-12T00:00:00.000000Z\",\n                \"duration_hours\": 500,\n                \"features\": [\n                    \"Admin Panel\",\n                    \"User Authentication\",\n                    \"Analytics Integration\",\n                    \"Responsive Design\",\n                    \"Third-party APIs\"\n                ],\n                \"notes\": null,\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 4,\n                    \"first_name\": \"Daisha\",\n                    \"last_name\": \"Anderson\",\n                    \"email\": \"hannah.turner@example.net\",\n                    \"phone\": \"479.525.8497\",\n                    \"company\": \"Fay-Morissette\",\n                    \"address\": \"477 Kemmer Mews\",\n                    \"city\": \"South Willieberg\",\n                    \"state\": \"Ohio\",\n                    \"postal_code\": \"81647-4105\",\n                    \"country\": \"Senegal\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T15:38:30.000000Z\",\n                    \"updated_at\": \"2025-08-02T15:38:30.000000Z\"\n                }\n            },\n            {\n                \"id\": 6,\n                \"customer_id\": 4,\n                \"name\": \"Web Development\",\n                \"description\": \"Reprehenderit omnis fugit necessitatibus maxime. A aut corporis possimus iusto odit saepe. Pariatur eius velit ea omnis neque.\",\n                \"type\": \"support\",\n                \"price\": \"1411.21\",\n                \"status\": \"completed\",\n                \"start_date\": \"2025-05-10T00:00:00.000000Z\",\n                \"end_date\": \"2025-05-18T00:00:00.000000Z\",\n                \"duration_hours\": 342,\n                \"features\": [\n                    \"Analytics Integration\",\n                    \"Admin Panel\"\n                ],\n                \"notes\": \"Est tenetur culpa tempora voluptatem ea.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 4,\n                    \"first_name\": \"Daisha\",\n                    \"last_name\": \"Anderson\",\n                    \"email\": \"hannah.turner@example.net\",\n                    \"phone\": \"479.525.8497\",\n                    \"company\": \"Fay-Morissette\",\n                    \"address\": \"477 Kemmer Mews\",\n                    \"city\": \"South Willieberg\",\n                    \"state\": \"Ohio\",\n                    \"postal_code\": \"81647-4105\",\n                    \"country\": \"Senegal\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T15:38:30.000000Z\",\n                    \"updated_at\": \"2025-08-02T15:38:30.000000Z\"\n                }\n            },\n            {\n                \"id\": 7,\n                \"customer_id\": 5,\n                \"name\": \"System Integration\",\n                \"description\": \"Non ut totam vero rerum fugit. Unde distinctio sed quia ipsam qui sed exercitationem ullam. Sit suscipit sunt asperiores in velit aut.\",\n                \"type\": \"development\",\n                \"price\": \"2367.25\",\n                \"status\": \"pending\",\n                \"start_date\": \"2025-05-03T00:00:00.000000Z\",\n                \"end_date\": \"2025-05-24T00:00:00.000000Z\",\n                \"duration_hours\": 238,\n                \"features\": [\n                    \"Analytics Integration\",\n                    \"Payment Integration\",\n                    \"Security Features\",\n                    \"User Authentication\"\n                ],\n                \"notes\": \"Eius et adipisci nihil sunt veniam et maiores.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 5,\n                    \"first_name\": \"Isaiah\",\n                    \"last_name\": \"White\",\n                    \"email\": \"wintheiser.greyson@example.org\",\n                    \"phone\": \"1-657-668-0436\",\n                    \"company\": \"Hermiston, Reynolds and Kshlerin\",\n                    \"address\": \"152 Effertz Radial Suite 080\",\n                    \"city\": \"Carolanneborough\",\n                    \"state\": \"New Hampshire\",\n                    \"postal_code\": \"45250-4295\",\n                    \"country\": \"Senegal\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T15:38:30.000000Z\",\n                    \"updated_at\": \"2025-08-02T15:38:30.000000Z\"\n                }\n            },\n            {\n                \"id\": 8,\n                \"customer_id\": 5,\n                \"name\": \"System Integration\",\n                \"description\": \"Velit et fugiat necessitatibus explicabo repudiandae quidem. Minima necessitatibus molestias dolorem ratione eos provident culpa. Inventore distinctio quia quos id totam a.\",\n                \"type\": \"maintenance\",\n                \"price\": \"614.00\",\n                \"status\": \"inactive\",\n                \"start_date\": \"2025-02-04T00:00:00.000000Z\",\n                \"end_date\": \"2025-07-06T00:00:00.000000Z\",\n                \"duration_hours\": 282,\n                \"features\": [\n                    \"Admin Panel\",\n                    \"Analytics Integration\",\n                    \"User Authentication\",\n                    \"Third-party APIs\"\n                ],\n                \"notes\": \"Ratione sed esse id aspernatur et quia.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 5,\n                    \"first_name\": \"Isaiah\",\n                    \"last_name\": \"White\",\n                    \"email\": \"wintheiser.greyson@example.org\",\n                    \"phone\": \"1-657-668-0436\",\n                    \"company\": \"Hermiston, Reynolds and Kshlerin\",\n                    \"address\": \"152 Effertz Radial Suite 080\",\n                    \"city\": \"Carolanneborough\",\n                    \"state\": \"New Hampshire\",\n                    \"postal_code\": \"45250-4295\",\n                    \"country\": \"Senegal\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T15:38:30.000000Z\",\n                    \"updated_at\": \"2025-08-02T15:38:30.000000Z\"\n                }\n            },\n            {\n                \"id\": 9,\n                \"customer_id\": 6,\n                \"name\": \"System Integration\",\n                \"description\": \"Unde ut non sed alias corrupti. Et autem voluptatem veritatis laboriosam consectetur quidem. Soluta sed repudiandae nam et aspernatur pariatur. A quis et omnis vel. Sit nemo facere at ex.\",\n                \"type\": \"consultation\",\n                \"price\": \"8781.02\",\n                \"status\": \"inactive\",\n                \"start_date\": \"2025-05-06T00:00:00.000000Z\",\n                \"end_date\": \"2025-11-12T00:00:00.000000Z\",\n                \"duration_hours\": 149,\n                \"features\": [\n                    \"Mobile Optimization\",\n                    \"User Authentication\",\n                    \"SEO Optimization\",\n                    \"Third-party APIs\",\n                    \"Analytics Integration\"\n                ],\n                \"notes\": null,\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 6,\n                    \"first_name\": \"Solon\",\n                    \"last_name\": \"Osinski\",\n                    \"email\": \"garnet57@example.net\",\n                    \"phone\": \"678.415.2948\",\n                    \"company\": \"Lowe, Brown and Braun\",\n                    \"address\": \"3417 Michel Stravenue Apt. 595\",\n                    \"city\": \"McKenziebury\",\n                    \"state\": \"South Carolina\",\n                    \"postal_code\": \"68380-2014\",\n                    \"country\": \"Russian Federation\",\n                    \"status\": \"active\",\n                    \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n                }\n            },\n            {\n                \"id\": 10,\n                \"customer_id\": 7,\n                \"name\": \"E-commerce Solution\",\n                \"description\": \"Animi vel blanditiis et consequatur blanditiis. Beatae iure quis ut illum ut. Doloribus non esse et quaerat. Et vitae hic ipsam omnis doloribus sapiente autem. Non voluptatem consectetur dignissimos dolorem.\",\n                \"type\": \"support\",\n                \"price\": \"8056.53\",\n                \"status\": \"inactive\",\n                \"start_date\": \"2025-03-10T00:00:00.000000Z\",\n                \"end_date\": \"2025-05-04T00:00:00.000000Z\",\n                \"duration_hours\": 352,\n                \"features\": [\n                    \"Security Features\",\n                    \"Mobile Optimization\",\n                    \"Analytics Integration\"\n                ],\n                \"notes\": \"Rerum error consequatur soluta soluta facere distinctio.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 7,\n                    \"first_name\": \"Ebba\",\n                    \"last_name\": \"Bruen\",\n                    \"email\": \"lindsey.schowalter@example.com\",\n                    \"phone\": \"864.264.1188\",\n                    \"company\": \"Schuppe, Windler and Harber\",\n                    \"address\": \"8341 Kerluke Roads Apt. 337\",\n                    \"city\": \"East Margaretta\",\n                    \"state\": \"Pennsylvania\",\n                    \"postal_code\": \"94469\",\n                    \"country\": \"Estonia\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n                }\n            },\n            {\n                \"id\": 11,\n                \"customer_id\": 8,\n                \"name\": \"E-commerce Solution\",\n                \"description\": \"Et ipsam ducimus ex in rerum. Fuga tempora consectetur est sit libero consectetur debitis. Perspiciatis adipisci itaque consequatur sequi eos omnis. Porro totam fugiat blanditiis ex cum.\",\n                \"type\": \"development\",\n                \"price\": \"4305.16\",\n                \"status\": \"completed\",\n                \"start_date\": \"2025-08-18T00:00:00.000000Z\",\n                \"end_date\": \"2025-11-12T00:00:00.000000Z\",\n                \"duration_hours\": 78,\n                \"features\": [\n                    \"Responsive Design\",\n                    \"SEO Optimization\"\n                ],\n                \"notes\": \"Nulla mollitia est veritatis facilis amet aut architecto.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 8,\n                    \"first_name\": \"Lucious\",\n                    \"last_name\": \"Roob\",\n                    \"email\": \"von.savanah@example.net\",\n                    \"phone\": \"+1-463-799-7105\",\n                    \"company\": \"Kilback, Mitchell and Wisozk\",\n                    \"address\": \"4049 Russel Garden\",\n                    \"city\": \"South Dennis\",\n                    \"state\": \"Nebraska\",\n                    \"postal_code\": \"87806-9649\",\n                    \"country\": \"Equatorial Guinea\",\n                    \"status\": \"active\",\n                    \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n                }\n            },\n            {\n                \"id\": 12,\n                \"customer_id\": 9,\n                \"name\": \"Database Design\",\n                \"description\": \"Aperiam dolore eum ex eum voluptatem et. Corrupti eveniet sint qui ad quas. Nihil ut itaque fugit beatae quo.\",\n                \"type\": \"other\",\n                \"price\": \"2055.74\",\n                \"status\": \"completed\",\n                \"start_date\": \"2025-06-28T00:00:00.000000Z\",\n                \"end_date\": \"2026-01-07T00:00:00.000000Z\",\n                \"duration_hours\": 101,\n                \"features\": [\n                    \"Admin Panel\",\n                    \"Mobile Optimization\"\n                ],\n                \"notes\": \"Id in ad enim quis accusantium.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 9,\n                    \"first_name\": \"Kaley\",\n                    \"last_name\": \"Luettgen\",\n                    \"email\": \"jenkins.everett@example.com\",\n                    \"phone\": \"+1 (402) 674-9228\",\n                    \"company\": \"Gusikowski-Jacobs\",\n                    \"address\": \"9703 Zula Dam Apt. 072\",\n                    \"city\": \"Dorotheaville\",\n                    \"state\": \"Arizona\",\n                    \"postal_code\": \"03398-3544\",\n                    \"country\": \"Togo\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n                }\n            },\n            {\n                \"id\": 13,\n                \"customer_id\": 10,\n                \"name\": \"Technical Consultation\",\n                \"description\": \"Aspernatur aperiam molestias et iste ipsam saepe aliquid. Porro natus atque ut animi molestiae repellendus quia odit. Non est vel omnis facilis eaque ex.\",\n                \"type\": \"development\",\n                \"price\": \"3272.22\",\n                \"status\": \"inactive\",\n                \"start_date\": \"2025-06-10T00:00:00.000000Z\",\n                \"end_date\": \"2025-08-30T00:00:00.000000Z\",\n                \"duration_hours\": 200,\n                \"features\": [\n                    \"Mobile Optimization\",\n                    \"Security Features\",\n                    \"Third-party APIs\",\n                    \"Admin Panel\",\n                    \"Real-time Updates\"\n                ],\n                \"notes\": null,\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 10,\n                    \"first_name\": \"Marvin\",\n                    \"last_name\": \"Thiel\",\n                    \"email\": \"ffarrell@example.com\",\n                    \"phone\": \"+1-718-829-8405\",\n                    \"company\": \"Fahey-Kovacek\",\n                    \"address\": \"2020 Ashlynn Flats\",\n                    \"city\": \"Runolfsdottirstad\",\n                    \"state\": \"Mississippi\",\n                    \"postal_code\": \"38960\",\n                    \"country\": \"Moldova\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n                }\n            },\n            {\n                \"id\": 14,\n                \"customer_id\": 11,\n                \"name\": \"Security Audit\",\n                \"description\": \"Animi minus nemo similique ratione aut. Aut numquam error est itaque molestias non et. Illum esse debitis porro.\",\n                \"type\": \"support\",\n                \"price\": \"8281.19\",\n                \"status\": \"inactive\",\n                \"start_date\": \"2025-06-20T00:00:00.000000Z\",\n                \"end_date\": \"2025-09-06T00:00:00.000000Z\",\n                \"duration_hours\": 391,\n                \"features\": [\n                    \"Mobile Optimization\",\n                    \"Real-time Updates\",\n                    \"Responsive Design\",\n                    \"Third-party APIs\"\n                ],\n                \"notes\": null,\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 11,\n                    \"first_name\": \"Branson\",\n                    \"last_name\": \"Kunde\",\n                    \"email\": \"iwatsica@example.com\",\n                    \"phone\": \"+1-857-399-0489\",\n                    \"company\": \"Farrell-Reinger\",\n                    \"address\": \"990 Schmitt Via Suite 193\",\n                    \"city\": \"Andyburgh\",\n                    \"state\": \"Wyoming\",\n                    \"postal_code\": \"36148\",\n                    \"country\": \"El Salvador\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n                }\n            },\n            {\n                \"id\": 15,\n                \"customer_id\": 12,\n                \"name\": \"Database Design\",\n                \"description\": \"Est quas et officiis aut consequuntur et voluptatibus. Voluptate quae odio accusamus aut sunt velit.\",\n                \"type\": \"development\",\n                \"price\": \"1949.58\",\n                \"status\": \"completed\",\n                \"start_date\": \"2025-06-06T00:00:00.000000Z\",\n                \"end_date\": \"2025-10-01T00:00:00.000000Z\",\n                \"duration_hours\": 213,\n                \"features\": [\n                    \"Security Features\",\n                    \"Real-time Updates\",\n                    \"Responsive Design\",\n                    \"Mobile Optimization\"\n                ],\n                \"notes\": \"Eius et cumque repudiandae omnis iste ut molestias.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 12,\n                    \"first_name\": \"Nayeli\",\n                    \"last_name\": \"Harvey\",\n                    \"email\": \"heaven81@example.net\",\n                    \"phone\": \"+1-603-590-7861\",\n                    \"company\": \"Fadel, Bruen and Pfeffer\",\n                    \"address\": \"754 Carlotta View\",\n                    \"city\": \"South Mauriciofurt\",\n                    \"state\": \"Nebraska\",\n                    \"postal_code\": \"76840-3002\",\n                    \"country\": \"Saint Kitts and Nevis\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n                }\n            },\n            {\n                \"id\": 16,\n                \"customer_id\": 13,\n                \"name\": \"Technical Consultation\",\n                \"description\": \"Est qui eos cupiditate accusantium dolorum quaerat. Et qui quia velit officia odio eos. Corporis unde dicta rerum. Repellendus aut animi dolorum ab accusantium voluptatem corporis.\",\n                \"type\": \"other\",\n                \"price\": \"1308.30\",\n                \"status\": \"completed\",\n                \"start_date\": \"2025-05-29T00:00:00.000000Z\",\n                \"end_date\": \"2025-11-29T00:00:00.000000Z\",\n                \"duration_hours\": 336,\n                \"features\": [\n                    \"Admin Panel\",\n                    \"User Authentication\",\n                    \"Analytics Integration\",\n                    \"Third-party APIs\",\n                    \"Payment Integration\"\n                ],\n                \"notes\": \"Error nam quam mollitia eos nulla.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 13,\n                    \"first_name\": \"Kaitlin\",\n                    \"last_name\": \"Lockman\",\n                    \"email\": \"beverly17@example.net\",\n                    \"phone\": \"820.623.9559\",\n                    \"company\": \"Bechtelar, Davis and Abernathy\",\n                    \"address\": \"588 Camylle Burg\",\n                    \"city\": \"Port Jackeline\",\n                    \"state\": \"New York\",\n                    \"postal_code\": \"27562\",\n                    \"country\": \"Estonia\",\n                    \"status\": \"active\",\n                    \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n                }\n            }\n        ],\n        \"first_page_url\": \"http://localhost:8000/api/services?page=1\",\n        \"from\": 1,\n        \"last_page\": 2,\n        \"last_page_url\": \"http://localhost:8000/api/services?page=2\",\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8000/api/services?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": \"http://localhost:8000/api/services?page=2\",\n                \"label\": \"2\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8000/api/services?page=2\",\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"next_page_url\": \"http://localhost:8000/api/services?page=2\",\n        \"path\": \"http://localhost:8000/api/services\",\n        \"per_page\": 15,\n        \"prev_page_url\": null,\n        \"to\": 15,\n        \"total\": 28\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Search Services",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/services?search=web&per_page=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"services"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "web"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Done",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/services?search=web&per_page=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"services"
+									],
+									"query": [
+										{
+											"key": "search",
+											"value": "web"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.18"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 18:41:35 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Services retrieved successfully\",\n    \"data\": {\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": 29,\n                \"customer_id\": 26,\n                \"name\": \"E-commerce Website Development\",\n                \"description\": \"Complete e-commerce solution with modern features including payment integration, inventory management, and admin panel\",\n                \"type\": \"development\",\n                \"price\": \"5000.00\",\n                \"status\": \"active\",\n                \"start_date\": \"2025-08-05T00:00:00.000000Z\",\n                \"end_date\": \"2025-09-24T00:00:00.000000Z\",\n                \"duration_hours\": 200,\n                \"features\": [\n                    \"Responsive Design\",\n                    \"Payment Gateway Integration\",\n                    \"Admin Panel\",\n                    \"Inventory Management\",\n                    \"SEO Optimization\",\n                    \"Mobile Optimization\"\n                ],\n                \"notes\": \"Client prefers React frontend with Laravel backend. Requires integration with existing CRM system.\",\n                \"created_at\": \"2025-08-02T18:40:43.000000Z\",\n                \"updated_at\": \"2025-08-02T18:40:43.000000Z\",\n                \"customer\": {\n                    \"id\": 26,\n                    \"first_name\": \"hazzzim\",\n                    \"last_name\": \"Gdaraa\",\n                    \"email\": \"hazim.gdara@gmail.com\",\n                    \"phone\": \"+1987654321\",\n                    \"company\": \"Updated Acme Corporation\",\n                    \"address\": \"123 RUE DE POMME\",\n                    \"city\": \"tUNIS\",\n                    \"state\": \"TT\",\n                    \"postal_code\": \"10001\",\n                    \"country\": \"tn\",\n                    \"status\": \"active\",\n                    \"created_at\": \"2025-08-02T18:33:57.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:36:45.000000Z\"\n                }\n            },\n            {\n                \"id\": 2,\n                \"customer_id\": 2,\n                \"name\": \"Web Development\",\n                \"description\": \"Aut et libero et delectus error maxime sunt. Quia reprehenderit nihil velit ipsum rem earum iusto. Et et nihil dolor.\",\n                \"type\": \"training\",\n                \"price\": \"9044.05\",\n                \"status\": \"active\",\n                \"start_date\": \"2025-05-25T00:00:00.000000Z\",\n                \"end_date\": \"2025-08-23T00:00:00.000000Z\",\n                \"duration_hours\": 360,\n                \"features\": [\n                    \"User Authentication\",\n                    \"Analytics Integration\",\n                    \"Real-time Updates\",\n                    \"Third-party APIs\"\n                ],\n                \"notes\": null,\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 2,\n                    \"first_name\": \"Jasen\",\n                    \"last_name\": \"Fadel\",\n                    \"email\": \"cristina.kerluke@example.net\",\n                    \"phone\": \"689-606-2149\",\n                    \"company\": \"Emard Group\",\n                    \"address\": \"15452 Vesta Forest Suite 339\",\n                    \"city\": \"Ornburgh\",\n                    \"state\": \"North Carolina\",\n                    \"postal_code\": \"73594-8271\",\n                    \"country\": \"Sao Tome and Principe\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T15:38:30.000000Z\",\n                    \"updated_at\": \"2025-08-02T15:38:30.000000Z\"\n                }\n            },\n            {\n                \"id\": 6,\n                \"customer_id\": 4,\n                \"name\": \"Web Development\",\n                \"description\": \"Reprehenderit omnis fugit necessitatibus maxime. A aut corporis possimus iusto odit saepe. Pariatur eius velit ea omnis neque.\",\n                \"type\": \"support\",\n                \"price\": \"1411.21\",\n                \"status\": \"completed\",\n                \"start_date\": \"2025-05-10T00:00:00.000000Z\",\n                \"end_date\": \"2025-05-18T00:00:00.000000Z\",\n                \"duration_hours\": 342,\n                \"features\": [\n                    \"Analytics Integration\",\n                    \"Admin Panel\"\n                ],\n                \"notes\": \"Est tenetur culpa tempora voluptatem ea.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 4,\n                    \"first_name\": \"Daisha\",\n                    \"last_name\": \"Anderson\",\n                    \"email\": \"hannah.turner@example.net\",\n                    \"phone\": \"479.525.8497\",\n                    \"company\": \"Fay-Morissette\",\n                    \"address\": \"477 Kemmer Mews\",\n                    \"city\": \"South Willieberg\",\n                    \"state\": \"Ohio\",\n                    \"postal_code\": \"81647-4105\",\n                    \"country\": \"Senegal\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T15:38:30.000000Z\",\n                    \"updated_at\": \"2025-08-02T15:38:30.000000Z\"\n                }\n            },\n            {\n                \"id\": 1,\n                \"customer_id\": 1,\n                \"name\": \"Web Development\",\n                \"description\": \"Quia necessitatibus dignissimos iusto officia ipsa delectus sequi vel. Necessitatibus voluptatem voluptatem nisi iste voluptates doloribus iure. Et aut animi incidunt cumque.\",\n                \"type\": \"training\",\n                \"price\": \"7077.58\",\n                \"status\": \"inactive\",\n                \"start_date\": \"2025-02-07T00:00:00.000000Z\",\n                \"end_date\": \"2025-11-06T00:00:00.000000Z\",\n                \"duration_hours\": 292,\n                \"features\": [\n                    \"Mobile Optimization\",\n                    \"Admin Panel\",\n                    \"Analytics Integration\"\n                ],\n                \"notes\": null,\n                \"created_at\": \"2025-08-02T18:21:33.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:33.000000Z\",\n                \"customer\": {\n                    \"id\": 1,\n                    \"first_name\": \"Karelle\",\n                    \"last_name\": \"Runolfsdottir\",\n                    \"email\": \"adrain.kemmer@example.com\",\n                    \"phone\": \"+1 (364) 355-7742\",\n                    \"company\": \"Kerluke, Willms and Ondricka\",\n                    \"address\": \"1479 Otha Ways Suite 557\",\n                    \"city\": \"Jasttown\",\n                    \"state\": \"Iowa\",\n                    \"postal_code\": \"90129\",\n                    \"country\": \"Nicaragua\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T15:38:30.000000Z\",\n                    \"updated_at\": \"2025-08-02T15:38:30.000000Z\"\n                }\n            }\n        ],\n        \"first_page_url\": \"http://localhost:8000/api/services?page=1\",\n        \"from\": 1,\n        \"last_page\": 1,\n        \"last_page_url\": \"http://localhost:8000/api/services?page=1\",\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8000/api/services?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"next_page_url\": null,\n        \"path\": \"http://localhost:8000/api/services\",\n        \"per_page\": 10,\n        \"prev_page_url\": null,\n        \"to\": 4,\n        \"total\": 4\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Filter Services by Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/services?status=active&per_page=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"services"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "active"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Done",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/services?status=active&per_page=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"services"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "active"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.18"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 18:41:47 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Services retrieved successfully\",\n    \"data\": {\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": 29,\n                \"customer_id\": 26,\n                \"name\": \"E-commerce Website Development\",\n                \"description\": \"Complete e-commerce solution with modern features including payment integration, inventory management, and admin panel\",\n                \"type\": \"development\",\n                \"price\": \"5000.00\",\n                \"status\": \"active\",\n                \"start_date\": \"2025-08-05T00:00:00.000000Z\",\n                \"end_date\": \"2025-09-24T00:00:00.000000Z\",\n                \"duration_hours\": 200,\n                \"features\": [\n                    \"Responsive Design\",\n                    \"Payment Gateway Integration\",\n                    \"Admin Panel\",\n                    \"Inventory Management\",\n                    \"SEO Optimization\",\n                    \"Mobile Optimization\"\n                ],\n                \"notes\": \"Client prefers React frontend with Laravel backend. Requires integration with existing CRM system.\",\n                \"created_at\": \"2025-08-02T18:40:43.000000Z\",\n                \"updated_at\": \"2025-08-02T18:40:43.000000Z\",\n                \"customer\": {\n                    \"id\": 26,\n                    \"first_name\": \"hazzzim\",\n                    \"last_name\": \"Gdaraa\",\n                    \"email\": \"hazim.gdara@gmail.com\",\n                    \"phone\": \"+1987654321\",\n                    \"company\": \"Updated Acme Corporation\",\n                    \"address\": \"123 RUE DE POMME\",\n                    \"city\": \"tUNIS\",\n                    \"state\": \"TT\",\n                    \"postal_code\": \"10001\",\n                    \"country\": \"tn\",\n                    \"status\": \"active\",\n                    \"created_at\": \"2025-08-02T18:33:57.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:36:45.000000Z\"\n                }\n            },\n            {\n                \"id\": 2,\n                \"customer_id\": 2,\n                \"name\": \"Web Development\",\n                \"description\": \"Aut et libero et delectus error maxime sunt. Quia reprehenderit nihil velit ipsum rem earum iusto. Et et nihil dolor.\",\n                \"type\": \"training\",\n                \"price\": \"9044.05\",\n                \"status\": \"active\",\n                \"start_date\": \"2025-05-25T00:00:00.000000Z\",\n                \"end_date\": \"2025-08-23T00:00:00.000000Z\",\n                \"duration_hours\": 360,\n                \"features\": [\n                    \"User Authentication\",\n                    \"Analytics Integration\",\n                    \"Real-time Updates\",\n                    \"Third-party APIs\"\n                ],\n                \"notes\": null,\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 2,\n                    \"first_name\": \"Jasen\",\n                    \"last_name\": \"Fadel\",\n                    \"email\": \"cristina.kerluke@example.net\",\n                    \"phone\": \"689-606-2149\",\n                    \"company\": \"Emard Group\",\n                    \"address\": \"15452 Vesta Forest Suite 339\",\n                    \"city\": \"Ornburgh\",\n                    \"state\": \"North Carolina\",\n                    \"postal_code\": \"73594-8271\",\n                    \"country\": \"Sao Tome and Principe\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T15:38:30.000000Z\",\n                    \"updated_at\": \"2025-08-02T15:38:30.000000Z\"\n                }\n            },\n            {\n                \"id\": 4,\n                \"customer_id\": 3,\n                \"name\": \"Security Audit\",\n                \"description\": \"Dolor ut adipisci aut eveniet eum. Dolores doloribus nihil non et adipisci. Saepe in deleniti debitis laboriosam nam reprehenderit minima ipsum. Consectetur vel sit assumenda expedita optio et suscipit doloribus.\",\n                \"type\": \"other\",\n                \"price\": \"9604.42\",\n                \"status\": \"active\",\n                \"start_date\": \"2025-03-14T00:00:00.000000Z\",\n                \"end_date\": \"2026-01-18T00:00:00.000000Z\",\n                \"duration_hours\": 408,\n                \"features\": [\n                    \"Third-party APIs\",\n                    \"Analytics Integration\",\n                    \"SEO Optimization\",\n                    \"Admin Panel\"\n                ],\n                \"notes\": \"Minima iste iure est aspernatur.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 3,\n                    \"first_name\": \"Ara\",\n                    \"last_name\": \"Zieme\",\n                    \"email\": \"kertzmann.lloyd@example.org\",\n                    \"phone\": \"786.528.0319\",\n                    \"company\": \"Gerhold Group\",\n                    \"address\": \"4526 Bosco Club Suite 319\",\n                    \"city\": \"Vivianefort\",\n                    \"state\": \"Massachusetts\",\n                    \"postal_code\": \"41793\",\n                    \"country\": \"Albania\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T15:38:30.000000Z\",\n                    \"updated_at\": \"2025-08-02T15:38:30.000000Z\"\n                }\n            },\n            {\n                \"id\": 19,\n                \"customer_id\": 16,\n                \"name\": \"API Development\",\n                \"description\": \"Minus illo eum reprehenderit sapiente. Maiores iste rem dolores et ut enim est. Aut aut voluptas nihil repellat similique modi nesciunt. Delectus aut quis ab est aut.\",\n                \"type\": \"consultation\",\n                \"price\": \"1340.37\",\n                \"status\": \"active\",\n                \"start_date\": \"2025-08-26T00:00:00.000000Z\",\n                \"end_date\": \"2026-01-09T00:00:00.000000Z\",\n                \"duration_hours\": 321,\n                \"features\": [\n                    \"Security Features\",\n                    \"User Authentication\",\n                    \"Mobile Optimization\"\n                ],\n                \"notes\": \"Et odio error debitis nesciunt.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 16,\n                    \"first_name\": \"Kaley\",\n                    \"last_name\": \"Legros\",\n                    \"email\": \"darrell93@example.org\",\n                    \"phone\": \"1-260-517-2286\",\n                    \"company\": \"Graham Inc\",\n                    \"address\": \"86117 Metz Ramp\",\n                    \"city\": \"Henryberg\",\n                    \"state\": \"New Mexico\",\n                    \"postal_code\": \"09895\",\n                    \"country\": \"Bouvet Island (Bouvetoya)\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n                }\n            },\n            {\n                \"id\": 25,\n                \"customer_id\": 22,\n                \"name\": \"E-commerce Solution\",\n                \"description\": \"Est sit dolorum error nemo ratione ab. Fugit ipsam odit asperiores illum soluta iste ratione labore. Id qui aspernatur ex enim.\",\n                \"type\": \"maintenance\",\n                \"price\": \"9804.19\",\n                \"status\": \"active\",\n                \"start_date\": \"2025-02-24T00:00:00.000000Z\",\n                \"end_date\": \"2026-01-27T00:00:00.000000Z\",\n                \"duration_hours\": 305,\n                \"features\": [\n                    \"Analytics Integration\",\n                    \"Admin Panel\",\n                    \"User Authentication\",\n                    \"Real-time Updates\"\n                ],\n                \"notes\": \"Id aspernatur esse est eveniet.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 22,\n                    \"first_name\": \"Ernie\",\n                    \"last_name\": \"Auer\",\n                    \"email\": \"grady98@example.org\",\n                    \"phone\": \"+1-920-634-2610\",\n                    \"company\": \"Dach, Turcotte and Sanford\",\n                    \"address\": \"28639 Petra Village Suite 989\",\n                    \"city\": \"Johnsside\",\n                    \"state\": \"Minnesota\",\n                    \"postal_code\": \"81694-5950\",\n                    \"country\": \"Argentina\",\n                    \"status\": \"active\",\n                    \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n                }\n            },\n            {\n                \"id\": 26,\n                \"customer_id\": 23,\n                \"name\": \"Performance Optimization\",\n                \"description\": \"Ea amet alias ad repudiandae. Occaecati debitis vitae qui voluptas tempora error fugit. Dolores pariatur quam temporibus laudantium. Corrupti possimus eos mollitia consequatur totam laudantium tenetur.\",\n                \"type\": \"development\",\n                \"price\": \"4518.75\",\n                \"status\": \"active\",\n                \"start_date\": \"2025-08-22T00:00:00.000000Z\",\n                \"end_date\": \"2025-09-24T00:00:00.000000Z\",\n                \"duration_hours\": 76,\n                \"features\": [\n                    \"Real-time Updates\",\n                    \"Mobile Optimization\",\n                    \"SEO Optimization\",\n                    \"Responsive Design\",\n                    \"Third-party APIs\"\n                ],\n                \"notes\": \"Architecto aperiam velit enim alias ut at.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 23,\n                    \"first_name\": \"Marcella\",\n                    \"last_name\": \"Block\",\n                    \"email\": \"margarette.runolfsson@example.org\",\n                    \"phone\": \"+16064267056\",\n                    \"company\": \"Rice, Steuber and Donnelly\",\n                    \"address\": \"31909 Schuster Harbors\",\n                    \"city\": \"Lloydtown\",\n                    \"state\": \"Washington\",\n                    \"postal_code\": \"05847\",\n                    \"country\": \"Hong Kong\",\n                    \"status\": \"active\",\n                    \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n                }\n            }\n        ],\n        \"first_page_url\": \"http://localhost:8000/api/services?page=1\",\n        \"from\": 1,\n        \"last_page\": 1,\n        \"last_page_url\": \"http://localhost:8000/api/services?page=1\",\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8000/api/services?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"next_page_url\": null,\n        \"path\": \"http://localhost:8000/api/services\",\n        \"per_page\": 10,\n        \"prev_page_url\": null,\n        \"to\": 6,\n        \"total\": 6\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Filter Services by Type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/services?type=development&per_page=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"services"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "development"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Done",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/services?type=development&per_page=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"services"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "development"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.18"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 18:41:59 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Services retrieved successfully\",\n    \"data\": {\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": 29,\n                \"customer_id\": 26,\n                \"name\": \"E-commerce Website Development\",\n                \"description\": \"Complete e-commerce solution with modern features including payment integration, inventory management, and admin panel\",\n                \"type\": \"development\",\n                \"price\": \"5000.00\",\n                \"status\": \"active\",\n                \"start_date\": \"2025-08-05T00:00:00.000000Z\",\n                \"end_date\": \"2025-09-24T00:00:00.000000Z\",\n                \"duration_hours\": 200,\n                \"features\": [\n                    \"Responsive Design\",\n                    \"Payment Gateway Integration\",\n                    \"Admin Panel\",\n                    \"Inventory Management\",\n                    \"SEO Optimization\",\n                    \"Mobile Optimization\"\n                ],\n                \"notes\": \"Client prefers React frontend with Laravel backend. Requires integration with existing CRM system.\",\n                \"created_at\": \"2025-08-02T18:40:43.000000Z\",\n                \"updated_at\": \"2025-08-02T18:40:43.000000Z\",\n                \"customer\": {\n                    \"id\": 26,\n                    \"first_name\": \"hazzzim\",\n                    \"last_name\": \"Gdaraa\",\n                    \"email\": \"hazim.gdara@gmail.com\",\n                    \"phone\": \"+1987654321\",\n                    \"company\": \"Updated Acme Corporation\",\n                    \"address\": \"123 RUE DE POMME\",\n                    \"city\": \"tUNIS\",\n                    \"state\": \"TT\",\n                    \"postal_code\": \"10001\",\n                    \"country\": \"tn\",\n                    \"status\": \"active\",\n                    \"created_at\": \"2025-08-02T18:33:57.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:36:45.000000Z\"\n                }\n            },\n            {\n                \"id\": 5,\n                \"customer_id\": 4,\n                \"name\": \"Maintenance Package\",\n                \"description\": \"Et maiores iusto soluta praesentium est. Ut voluptatibus laboriosam esse quis. Sint cum dolorem numquam sint tenetur.\",\n                \"type\": \"development\",\n                \"price\": \"1198.48\",\n                \"status\": \"completed\",\n                \"start_date\": \"2025-08-23T00:00:00.000000Z\",\n                \"end_date\": \"2025-12-12T00:00:00.000000Z\",\n                \"duration_hours\": 500,\n                \"features\": [\n                    \"Admin Panel\",\n                    \"User Authentication\",\n                    \"Analytics Integration\",\n                    \"Responsive Design\",\n                    \"Third-party APIs\"\n                ],\n                \"notes\": null,\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 4,\n                    \"first_name\": \"Daisha\",\n                    \"last_name\": \"Anderson\",\n                    \"email\": \"hannah.turner@example.net\",\n                    \"phone\": \"479.525.8497\",\n                    \"company\": \"Fay-Morissette\",\n                    \"address\": \"477 Kemmer Mews\",\n                    \"city\": \"South Willieberg\",\n                    \"state\": \"Ohio\",\n                    \"postal_code\": \"81647-4105\",\n                    \"country\": \"Senegal\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T15:38:30.000000Z\",\n                    \"updated_at\": \"2025-08-02T15:38:30.000000Z\"\n                }\n            },\n            {\n                \"id\": 7,\n                \"customer_id\": 5,\n                \"name\": \"System Integration\",\n                \"description\": \"Non ut totam vero rerum fugit. Unde distinctio sed quia ipsam qui sed exercitationem ullam. Sit suscipit sunt asperiores in velit aut.\",\n                \"type\": \"development\",\n                \"price\": \"2367.25\",\n                \"status\": \"pending\",\n                \"start_date\": \"2025-05-03T00:00:00.000000Z\",\n                \"end_date\": \"2025-05-24T00:00:00.000000Z\",\n                \"duration_hours\": 238,\n                \"features\": [\n                    \"Analytics Integration\",\n                    \"Payment Integration\",\n                    \"Security Features\",\n                    \"User Authentication\"\n                ],\n                \"notes\": \"Eius et adipisci nihil sunt veniam et maiores.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 5,\n                    \"first_name\": \"Isaiah\",\n                    \"last_name\": \"White\",\n                    \"email\": \"wintheiser.greyson@example.org\",\n                    \"phone\": \"1-657-668-0436\",\n                    \"company\": \"Hermiston, Reynolds and Kshlerin\",\n                    \"address\": \"152 Effertz Radial Suite 080\",\n                    \"city\": \"Carolanneborough\",\n                    \"state\": \"New Hampshire\",\n                    \"postal_code\": \"45250-4295\",\n                    \"country\": \"Senegal\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T15:38:30.000000Z\",\n                    \"updated_at\": \"2025-08-02T15:38:30.000000Z\"\n                }\n            },\n            {\n                \"id\": 11,\n                \"customer_id\": 8,\n                \"name\": \"E-commerce Solution\",\n                \"description\": \"Et ipsam ducimus ex in rerum. Fuga tempora consectetur est sit libero consectetur debitis. Perspiciatis adipisci itaque consequatur sequi eos omnis. Porro totam fugiat blanditiis ex cum.\",\n                \"type\": \"development\",\n                \"price\": \"4305.16\",\n                \"status\": \"completed\",\n                \"start_date\": \"2025-08-18T00:00:00.000000Z\",\n                \"end_date\": \"2025-11-12T00:00:00.000000Z\",\n                \"duration_hours\": 78,\n                \"features\": [\n                    \"Responsive Design\",\n                    \"SEO Optimization\"\n                ],\n                \"notes\": \"Nulla mollitia est veritatis facilis amet aut architecto.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 8,\n                    \"first_name\": \"Lucious\",\n                    \"last_name\": \"Roob\",\n                    \"email\": \"von.savanah@example.net\",\n                    \"phone\": \"+1-463-799-7105\",\n                    \"company\": \"Kilback, Mitchell and Wisozk\",\n                    \"address\": \"4049 Russel Garden\",\n                    \"city\": \"South Dennis\",\n                    \"state\": \"Nebraska\",\n                    \"postal_code\": \"87806-9649\",\n                    \"country\": \"Equatorial Guinea\",\n                    \"status\": \"active\",\n                    \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n                }\n            },\n            {\n                \"id\": 13,\n                \"customer_id\": 10,\n                \"name\": \"Technical Consultation\",\n                \"description\": \"Aspernatur aperiam molestias et iste ipsam saepe aliquid. Porro natus atque ut animi molestiae repellendus quia odit. Non est vel omnis facilis eaque ex.\",\n                \"type\": \"development\",\n                \"price\": \"3272.22\",\n                \"status\": \"inactive\",\n                \"start_date\": \"2025-06-10T00:00:00.000000Z\",\n                \"end_date\": \"2025-08-30T00:00:00.000000Z\",\n                \"duration_hours\": 200,\n                \"features\": [\n                    \"Mobile Optimization\",\n                    \"Security Features\",\n                    \"Third-party APIs\",\n                    \"Admin Panel\",\n                    \"Real-time Updates\"\n                ],\n                \"notes\": null,\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 10,\n                    \"first_name\": \"Marvin\",\n                    \"last_name\": \"Thiel\",\n                    \"email\": \"ffarrell@example.com\",\n                    \"phone\": \"+1-718-829-8405\",\n                    \"company\": \"Fahey-Kovacek\",\n                    \"address\": \"2020 Ashlynn Flats\",\n                    \"city\": \"Runolfsdottirstad\",\n                    \"state\": \"Mississippi\",\n                    \"postal_code\": \"38960\",\n                    \"country\": \"Moldova\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n                }\n            },\n            {\n                \"id\": 15,\n                \"customer_id\": 12,\n                \"name\": \"Database Design\",\n                \"description\": \"Est quas et officiis aut consequuntur et voluptatibus. Voluptate quae odio accusamus aut sunt velit.\",\n                \"type\": \"development\",\n                \"price\": \"1949.58\",\n                \"status\": \"completed\",\n                \"start_date\": \"2025-06-06T00:00:00.000000Z\",\n                \"end_date\": \"2025-10-01T00:00:00.000000Z\",\n                \"duration_hours\": 213,\n                \"features\": [\n                    \"Security Features\",\n                    \"Real-time Updates\",\n                    \"Responsive Design\",\n                    \"Mobile Optimization\"\n                ],\n                \"notes\": \"Eius et cumque repudiandae omnis iste ut molestias.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 12,\n                    \"first_name\": \"Nayeli\",\n                    \"last_name\": \"Harvey\",\n                    \"email\": \"heaven81@example.net\",\n                    \"phone\": \"+1-603-590-7861\",\n                    \"company\": \"Fadel, Bruen and Pfeffer\",\n                    \"address\": \"754 Carlotta View\",\n                    \"city\": \"South Mauriciofurt\",\n                    \"state\": \"Nebraska\",\n                    \"postal_code\": \"76840-3002\",\n                    \"country\": \"Saint Kitts and Nevis\",\n                    \"status\": \"inactive\",\n                    \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n                }\n            },\n            {\n                \"id\": 26,\n                \"customer_id\": 23,\n                \"name\": \"Performance Optimization\",\n                \"description\": \"Ea amet alias ad repudiandae. Occaecati debitis vitae qui voluptas tempora error fugit. Dolores pariatur quam temporibus laudantium. Corrupti possimus eos mollitia consequatur totam laudantium tenetur.\",\n                \"type\": \"development\",\n                \"price\": \"4518.75\",\n                \"status\": \"active\",\n                \"start_date\": \"2025-08-22T00:00:00.000000Z\",\n                \"end_date\": \"2025-09-24T00:00:00.000000Z\",\n                \"duration_hours\": 76,\n                \"features\": [\n                    \"Real-time Updates\",\n                    \"Mobile Optimization\",\n                    \"SEO Optimization\",\n                    \"Responsive Design\",\n                    \"Third-party APIs\"\n                ],\n                \"notes\": \"Architecto aperiam velit enim alias ut at.\",\n                \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"updated_at\": \"2025-08-02T18:21:34.000000Z\",\n                \"customer\": {\n                    \"id\": 23,\n                    \"first_name\": \"Marcella\",\n                    \"last_name\": \"Block\",\n                    \"email\": \"margarette.runolfsson@example.org\",\n                    \"phone\": \"+16064267056\",\n                    \"company\": \"Rice, Steuber and Donnelly\",\n                    \"address\": \"31909 Schuster Harbors\",\n                    \"city\": \"Lloydtown\",\n                    \"state\": \"Washington\",\n                    \"postal_code\": \"05847\",\n                    \"country\": \"Hong Kong\",\n                    \"status\": \"active\",\n                    \"created_at\": \"2025-08-02T18:21:34.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:21:34.000000Z\"\n                }\n            }\n        ],\n        \"first_page_url\": \"http://localhost:8000/api/services?page=1\",\n        \"from\": 1,\n        \"last_page\": 1,\n        \"last_page_url\": \"http://localhost:8000/api/services?page=1\",\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8000/api/services?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"next_page_url\": null,\n        \"path\": \"http://localhost:8000/api/services\",\n        \"per_page\": 10,\n        \"prev_page_url\": null,\n        \"to\": 7,\n        \"total\": 7\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.data.id) {",
+									"        pm.environment.set('service_id', response.data.id);",
+									"        console.log('Service ID saved:', response.data.id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_id\": {{customer_id}},\n    \"name\": \"E-commerce Website Development\",\n    \"description\": \"Complete e-commerce solution with modern features including payment integration, inventory management, and admin panel\",\n    \"type\": \"development\",\n    \"price\": 5000.00,\n    \"status\": \"active\",\n    \"start_date\": \"2025-08-05\",\n    \"end_date\": \"2025-09-24\",\n    \"duration_hours\": 200,\n    \"features\": [\n        \"Responsive Design\",\n        \"Payment Gateway Integration\",\n        \"Admin Panel\",\n        \"Inventory Management\",\n        \"SEO Optimization\",\n        \"Mobile Optimization\"\n    ],\n    \"notes\": \"Client prefers React frontend with Laravel backend. Requires integration with existing CRM system.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/services",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"services"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Done",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"customer_id\": {{customer_id}},\n    \"name\": \"E-commerce Website Development\",\n    \"description\": \"Complete e-commerce solution with modern features including payment integration, inventory management, and admin panel\",\n    \"type\": \"development\",\n    \"price\": 5000.00,\n    \"status\": \"active\",\n    \"start_date\": \"2025-08-05\",\n    \"end_date\": \"2025-09-24\",\n    \"duration_hours\": 200,\n    \"features\": [\n        \"Responsive Design\",\n        \"Payment Gateway Integration\",\n        \"Admin Panel\",\n        \"Inventory Management\",\n        \"SEO Optimization\",\n        \"Mobile Optimization\"\n    ],\n    \"notes\": \"Client prefers React frontend with Laravel backend. Requires integration with existing CRM system.\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/services",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"services"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.18"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 18:40:43 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Service created successfully\",\n    \"data\": {\n        \"customer_id\": 26,\n        \"name\": \"E-commerce Website Development\",\n        \"description\": \"Complete e-commerce solution with modern features including payment integration, inventory management, and admin panel\",\n        \"type\": \"development\",\n        \"price\": \"5000.00\",\n        \"status\": \"active\",\n        \"start_date\": \"2025-08-05T00:00:00.000000Z\",\n        \"end_date\": \"2025-09-24T00:00:00.000000Z\",\n        \"duration_hours\": 200,\n        \"notes\": \"Client prefers React frontend with Laravel backend. Requires integration with existing CRM system.\",\n        \"features\": [\n            \"Responsive Design\",\n            \"Payment Gateway Integration\",\n            \"Admin Panel\",\n            \"Inventory Management\",\n            \"SEO Optimization\",\n            \"Mobile Optimization\"\n        ],\n        \"updated_at\": \"2025-08-02T18:40:43.000000Z\",\n        \"created_at\": \"2025-08-02T18:40:43.000000Z\",\n        \"id\": 29,\n        \"customer\": {\n            \"id\": 26,\n            \"first_name\": \"hazzzim\",\n            \"last_name\": \"Gdaraa\",\n            \"email\": \"hazim.gdara@gmail.com\",\n            \"phone\": \"+1987654321\",\n            \"company\": \"Updated Acme Corporation\",\n            \"address\": \"123 RUE DE POMME\",\n            \"city\": \"tUNIS\",\n            \"state\": \"TT\",\n            \"postal_code\": \"10001\",\n            \"country\": \"tn\",\n            \"status\": \"active\",\n            \"created_at\": \"2025-08-02T18:33:57.000000Z\",\n            \"updated_at\": \"2025-08-02T18:36:45.000000Z\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Service by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/services/{{service_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"services",
+								"{{service_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Done",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/services/{{service_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"services",
+										"{{service_id}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.18"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 18:41:01 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Service retrieved successfully\",\n    \"data\": {\n        \"id\": 29,\n        \"customer_id\": 26,\n        \"name\": \"E-commerce Website Development\",\n        \"description\": \"Complete e-commerce solution with modern features including payment integration, inventory management, and admin panel\",\n        \"type\": \"development\",\n        \"price\": \"5000.00\",\n        \"status\": \"active\",\n        \"start_date\": \"2025-08-05T00:00:00.000000Z\",\n        \"end_date\": \"2025-09-24T00:00:00.000000Z\",\n        \"duration_hours\": 200,\n        \"features\": [\n            \"Responsive Design\",\n            \"Payment Gateway Integration\",\n            \"Admin Panel\",\n            \"Inventory Management\",\n            \"SEO Optimization\",\n            \"Mobile Optimization\"\n        ],\n        \"notes\": \"Client prefers React frontend with Laravel backend. Requires integration with existing CRM system.\",\n        \"created_at\": \"2025-08-02T18:40:43.000000Z\",\n        \"updated_at\": \"2025-08-02T18:40:43.000000Z\",\n        \"customer\": {\n            \"id\": 26,\n            \"first_name\": \"hazzzim\",\n            \"last_name\": \"Gdaraa\",\n            \"email\": \"hazim.gdara@gmail.com\",\n            \"phone\": \"+1987654321\",\n            \"company\": \"Updated Acme Corporation\",\n            \"address\": \"123 RUE DE POMME\",\n            \"city\": \"tUNIS\",\n            \"state\": \"TT\",\n            \"postal_code\": \"10001\",\n            \"country\": \"tn\",\n            \"status\": \"active\",\n            \"created_at\": \"2025-08-02T18:33:57.000000Z\",\n            \"updated_at\": \"2025-08-02T18:36:45.000000Z\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Service",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated E-commerce Website Development\",\n    \"description\": \"Updated complete e-commerce solution with enhanced features\",\n    \"price\": 6000.00,\n    \"status\": \"pending\",\n    \"duration_hours\": 250,\n    \"features\": [\n        \"Responsive Design\",\n        \"Payment Gateway Integration\",\n        \"Admin Panel\",\n        \"Inventory Management\",\n        \"SEO Optimization\",\n        \"Mobile Optimization\",\n        \"Real-time Analytics\",\n        \"Multi-language Support\"\n    ],\n    \"notes\": \"Updated requirements - added analytics and multi-language support\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/services/{{service_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"services",
+								"{{service_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer Services",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/customers/{{customer_id}}/services?per_page=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"{{customer_id}}",
+								"services"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Done",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/customers/{{customer_id}}/services?per_page=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customers",
+										"{{customer_id}}",
+										"services"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.18"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 02 Aug 2025 18:41:16 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Customer services retrieved successfully\",\n    \"data\": {\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": 29,\n                \"customer_id\": 26,\n                \"name\": \"E-commerce Website Development\",\n                \"description\": \"Complete e-commerce solution with modern features including payment integration, inventory management, and admin panel\",\n                \"type\": \"development\",\n                \"price\": \"5000.00\",\n                \"status\": \"active\",\n                \"start_date\": \"2025-08-05T00:00:00.000000Z\",\n                \"end_date\": \"2025-09-24T00:00:00.000000Z\",\n                \"duration_hours\": 200,\n                \"features\": [\n                    \"Responsive Design\",\n                    \"Payment Gateway Integration\",\n                    \"Admin Panel\",\n                    \"Inventory Management\",\n                    \"SEO Optimization\",\n                    \"Mobile Optimization\"\n                ],\n                \"notes\": \"Client prefers React frontend with Laravel backend. Requires integration with existing CRM system.\",\n                \"created_at\": \"2025-08-02T18:40:43.000000Z\",\n                \"updated_at\": \"2025-08-02T18:40:43.000000Z\",\n                \"customer\": {\n                    \"id\": 26,\n                    \"first_name\": \"hazzzim\",\n                    \"last_name\": \"Gdaraa\",\n                    \"email\": \"hazim.gdara@gmail.com\",\n                    \"phone\": \"+1987654321\",\n                    \"company\": \"Updated Acme Corporation\",\n                    \"address\": \"123 RUE DE POMME\",\n                    \"city\": \"tUNIS\",\n                    \"state\": \"TT\",\n                    \"postal_code\": \"10001\",\n                    \"country\": \"tn\",\n                    \"status\": \"active\",\n                    \"created_at\": \"2025-08-02T18:33:57.000000Z\",\n                    \"updated_at\": \"2025-08-02T18:36:45.000000Z\"\n                }\n            }\n        ],\n        \"first_page_url\": \"http://localhost:8000/api/customers/26/services?page=1\",\n        \"from\": 1,\n        \"last_page\": 1,\n        \"last_page_url\": \"http://localhost:8000/api/customers/26/services?page=1\",\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://localhost:8000/api/customers/26/services?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"next_page_url\": null,\n        \"path\": \"http://localhost:8000/api/customers/26/services\",\n        \"per_page\": 10,\n        \"prev_page_url\": null,\n        \"to\": 1,\n        \"total\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Service",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/services/{{service_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"services",
+								"{{service_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000/api"
+		},
+		{
+			"key": "auth_token",
+			"value": ""
+		},
+		{
+			"key": "customer_id",
+			"value": ""
+		},
+		{
+			"key": "service_id",
+			"value": ""
+		}
+	]
+}

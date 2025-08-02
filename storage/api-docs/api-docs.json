@@ -683,6 +683,620 @@
                     }
                 ]
             }
+        },
+        "/services": {
+            "get": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get all services",
+                "description": "Retrieve a paginated list of all services",
+                "operationId": "7427356885cfb02aa536e9f117be4cac",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 15
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search term",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by status",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "active",
+                                "inactive",
+                                "pending",
+                                "completed"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Filter by type",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "consultation",
+                                "development",
+                                "maintenance",
+                                "support",
+                                "training",
+                                "other"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Services retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Services retrieved successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer"
+                                                },
+                                                "total": {
+                                                    "type": "integer"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer"
+                                                },
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Service"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Create a new service",
+                "description": "Create a new service for a customer",
+                "operationId": "5036c80b50b3692feb9eb282be8923bc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "customer_id",
+                                    "name",
+                                    "type",
+                                    "price"
+                                ],
+                                "properties": {
+                                    "customer_id": {
+                                        "description": "Customer ID",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "description": "Service name",
+                                        "type": "string",
+                                        "example": "Web Development"
+                                    },
+                                    "description": {
+                                        "description": "Service description",
+                                        "type": "string",
+                                        "example": "Complete website development"
+                                    },
+                                    "type": {
+                                        "description": "Service type",
+                                        "type": "string",
+                                        "enum": [
+                                            "consultation",
+                                            "development",
+                                            "maintenance",
+                                            "support",
+                                            "training",
+                                            "other"
+                                        ],
+                                        "example": "development"
+                                    },
+                                    "price": {
+                                        "description": "Service price",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 2500
+                                    },
+                                    "status": {
+                                        "description": "Service status",
+                                        "type": "string",
+                                        "enum": [
+                                            "active",
+                                            "inactive",
+                                            "pending",
+                                            "completed"
+                                        ],
+                                        "example": "active"
+                                    },
+                                    "start_date": {
+                                        "description": "Start date",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-02-01"
+                                    },
+                                    "end_date": {
+                                        "description": "End date",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-03-15"
+                                    },
+                                    "duration_hours": {
+                                        "description": "Duration in hours",
+                                        "type": "integer",
+                                        "example": 120
+                                    },
+                                    "features": {
+                                        "description": "Service features",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "Responsive Design",
+                                            "SEO"
+                                        ]
+                                    },
+                                    "notes": {
+                                        "description": "Additional notes",
+                                        "type": "string",
+                                        "example": "Special requirements"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Service created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Service created successfully"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Service"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/services/{id}": {
+            "get": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get a specific service",
+                "description": "Retrieve a specific service by ID",
+                "operationId": "dd94e3c2f2eb8f68c21acf8b257832ef",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Service ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Service retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Service retrieved successfully"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Service"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Service not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Update a service",
+                "description": "Update a specific service by ID",
+                "operationId": "420e458aacb0a731aee169388e17606c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Service ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "customer_id": {
+                                        "description": "Customer ID",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "description": "Service name",
+                                        "type": "string",
+                                        "example": "Web Development"
+                                    },
+                                    "description": {
+                                        "description": "Service description",
+                                        "type": "string",
+                                        "example": "Complete website development"
+                                    },
+                                    "type": {
+                                        "description": "Service type",
+                                        "type": "string",
+                                        "enum": [
+                                            "consultation",
+                                            "development",
+                                            "maintenance",
+                                            "support",
+                                            "training",
+                                            "other"
+                                        ],
+                                        "example": "development"
+                                    },
+                                    "price": {
+                                        "description": "Service price",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 2500
+                                    },
+                                    "status": {
+                                        "description": "Service status",
+                                        "type": "string",
+                                        "enum": [
+                                            "active",
+                                            "inactive",
+                                            "pending",
+                                            "completed"
+                                        ],
+                                        "example": "active"
+                                    },
+                                    "start_date": {
+                                        "description": "Start date",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-02-01"
+                                    },
+                                    "end_date": {
+                                        "description": "End date",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-03-15"
+                                    },
+                                    "duration_hours": {
+                                        "description": "Duration in hours",
+                                        "type": "integer",
+                                        "example": 120
+                                    },
+                                    "features": {
+                                        "description": "Service features",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "Responsive Design",
+                                            "SEO"
+                                        ]
+                                    },
+                                    "notes": {
+                                        "description": "Additional notes",
+                                        "type": "string",
+                                        "example": "Special requirements"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Service updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Service updated successfully"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Service"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Service not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Delete a service",
+                "description": "Delete a specific service by ID",
+                "operationId": "32850462a010ec6de343a83b129f7fd0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Service ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Service deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Service deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Service not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/customers/{customerId}/services": {
+            "get": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get services by customer",
+                "description": "Retrieve all services for a specific customer",
+                "operationId": "cd48e9bb0b60a32f69af51fe1bfb26dd",
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "path",
+                        "description": "Customer ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 15
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Customer services retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Customer services retrieved successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer"
+                                                },
+                                                "total": {
+                                                    "type": "integer"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer"
+                                                },
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Service"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Customer not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -892,6 +1506,120 @@
                     }
                 },
                 "type": "object"
+            },
+            "Service": {
+                "title": "Service",
+                "description": "Service model",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "customer_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Web Development"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Complete website development with modern technologies"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "consultation",
+                            "development",
+                            "maintenance",
+                            "support",
+                            "training",
+                            "other"
+                        ],
+                        "example": "development"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 2500
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "active",
+                            "inactive",
+                            "pending",
+                            "completed"
+                        ],
+                        "example": "active"
+                    },
+                    "start_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-02-01"
+                    },
+                    "end_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-03-15"
+                    },
+                    "duration_hours": {
+                        "type": "integer",
+                        "example": 120
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "Responsive Design",
+                            "SEO Optimization",
+                            "Admin Panel"
+                        ]
+                    },
+                    "notes": {
+                        "type": "string",
+                        "example": "Client requires mobile-first approach"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-01-01T00:00:00.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-01-01T00:00:00.000000Z"
+                    },
+                    "customer": {
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "first_name": {
+                                "type": "string",
+                                "example": "John"
+                            },
+                            "last_name": {
+                                "type": "string",
+                                "example": "Doe"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "john.doe@example.com"
+                            },
+                            "company": {
+                                "type": "string",
+                                "example": "Acme Corp"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
             }
         },
         "securitySchemes": {
@@ -913,6 +1641,10 @@
         {
             "name": "Customers",
             "description": "Customers"
+        },
+        {
+            "name": "Services",
+            "description": "Services"
         }
     ],
     "security": [
